@@ -55,11 +55,11 @@
 
     <div class="container">
 
-        <h1>Voice Recognition in HTML</h1>
+        <h1>Hello, speek to me...</h1>
 
         <div class="record">
 
-            <form id="speak-form" method="get" action="https://www.google.com/search">
+            <form id="labnol" method="get" action="https://www.google.com/search" >
                 <input type="text" name="q" id="transcript" placeholder="Speak" />   <img onclick="startDictation()" src="https://icon-library.net/images/microphone-png-icon/microphone-png-icon-21.jpg" />
 
             </form>
@@ -68,83 +68,74 @@
 
     </div>
 
+    <!--הקלטה-->
     <script>
-  function startDictation() {
 
+    var valueOfSpeech;
 
+        function startDictation() {
 
-    if (window.hasOwnProperty('webkitSpeechRecognition')) {
+            if (window.hasOwnProperty('webkitSpeechRecognition')) {
 
-      var recognition = new webkitSpeechRecognition();
+                var recognition = new webkitSpeechRecognition();
 
-      recognition.continuous = false;
-      recognition.interimResults = false;
+                recognition.continuous = false;
+                recognition.interimResults = false;
 
-      recognition.lang = "en-US";
-      recognition.start();
+                recognition.lang = "en-US";
+                recognition.start();
 
-      recognition.onresult = function(e) {
-        document.getElementById('transcript').value
-                                 = e.results[0][0].transcript;
-        recognition.stop();
-        document.getElementById('labnol').submit();
-      };
+                recognition.onresult = function (e) {
+                    document.getElementById('transcript').value
+                        = e.results[0][0].transcript;
+                    recognition.stop();
+                    //document.getElementById('labnol').submit();//מעבר לאתר אחר
 
-      recognition.onerror = function(e) {
-        recognition.stop();
-      }
+                    valueOfSpeech = document.getElementById('transcript').value;//לוקח את טקסט ההקלטה
 
-    }
-  }
+                    var url = "https://everythingfonts.com/testdrive/mzUyooKjh99fgpSOEg7PsweF?text=";
+                    var apiOfSL = url.concat(valueOfSpeech);
+                    document.getElementById('signConverter').src = apiOfSL;//שם תוצאות של שפת הסימנים בתמונה
+                    go_get();
 
+                };
 
-    </script>
+                recognition.onerror = function (e) {
+                    recognition.stop();
+                }
 
-    <div id="player"></div>
-    <script>
-      // 2. This code loads the IFrame Player API code asynchronously.
-      var tag = document.createElement('script');
-
-      tag.src = "https://www.youtube.com/iframe_api";
-      var firstScriptTag = document.getElementsByTagName('script')[0];
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-      // 3. This function creates an <iframe> (and YouTube player)
-      //    after the API code downloads.
-      var player;
-      function onYouTubeIframeAPIReady() {
-        player = new YT.Player('player', {
-          height: '390',
-          width: '640',
-          videoId: 'M7lc1UVf-VE',
-          events: {
-            'onReady': onPlayerReady,
-            'onStateChange': onPlayerStateChange
-          }
-        });
-      }
-
-      // 4. The API will call this function when the video player is ready.
-      function onPlayerReady(event) {
-        event.target.playVideo();
-      }
-
-      // 5. The API calls this function when the player's state changes.
-      //    The function indicates that when playing a video (state=1),
-      //    the player should play for six seconds and then stop.
-      var done = false;
-      function onPlayerStateChange(event) {
-        if (event.data == YT.PlayerState.PLAYING && !done) {
-          setTimeout(stopVideo, 6000);
-          done = true;
+            }
         }
-      }
-      function stopVideo() {
-        player.stopVideo();
-      }
     </script>
+
+
+
+
+
+    <img src="" id="signConverter" height="200" width="300">
+
+
+    <script>
+        //youtube
+        function go_get() {
+            var base_url = 'http://www.youtube.com/embed?listType=search&list=';
+            var search_field = valueOfSpeech;
+            var target_url = base_url + search_field + "sign language";
+            var ifr = document.getElementById('youriframe');
+            ifr.src = target_url;
+            return false;
+        }
+
+    </script>
+
+    <iframe id="youriframe" width="640" height="360"></iframe>
+
+
+
+
+
 </body>
 
-</html>
+    </html>
 
 
