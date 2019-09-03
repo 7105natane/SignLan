@@ -60,18 +60,8 @@
     <div class="container">
 
         <h1>Hello, speek to me...</h1>
-
-        <div class="record">
-
-            <form id="labnol" method="get" action="https://www.google.com/search" >
-                <input type="text" name="q" id="transcript" placeholder="Speak" />   
-                <img onclick="startDictation()" src="https://icon-library.net/images/microphone-png-icon/microphone-png-icon-21.jpg" />
-            </form>
-           
-<textarea id="source" class="bx">T
-</textarea>
-<select name="to" id="lang">
-
+         Choose Your Language: <select name="to" id="lang">
+   <div class ="chooseLang">
    <option value = "az"> Azerbaijani </option>
     <option value = "sq"> Albanian </option>
     <option value = "en"> English </option>
@@ -107,15 +97,15 @@
     <option value = "sv"> Swedish </option>
     <option value = "et"> Estonian </option>
 </select>
-            
-<button id="translate" onclick="init()">Translate</button>
-<p>json</p>
-<div id="json" class="bx"></div>
-<p>Output</p>
-<div id="output" class="bx"></div>
         </div>
 
-    </div>
+        <div class="record">
+          
+            <form id="labnol" method="get" action="https://www.google.com/search" >
+                <input type="text" name="q" id="transcript" placeholder="Speak" />   
+                <img onclick="startDictation()" src="https://icon-library.net/images/microphone-png-icon/microphone-png-icon-21.jpg" />
+            </form>
+        </div>
 
     <!--הקלטה-->
     <script>
@@ -201,13 +191,13 @@
                         
                         var json = JSON.parse(res);
                         if (json.code == 200) {
-                            document.querySelector('#output').innerHTML = json.text[0]; //  json.text[0]) הטקסט נשמר במשתנה
+                             //  json.text[0]) הטקסט נשמר במשתנה
                         //    alert('in function:' + json.text[0]);
                             document.getElementById('transcript').value = json.text[0];
                             return json.text[0];
                         }
                         else {
-                            document.querySelector('#output').innerHTML = "Error Code: " + json.code;
+                            //document.querySelector('#output').innerHTML = "Error Code: " + json.code;
                         }
                        
                     }
