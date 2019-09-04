@@ -103,7 +103,7 @@
           
             <form id="labnol" method="get" action="https://www.google.com/search" >
                 <input type="text" name="q" id="transcript" placeholder="Speak" />   
-                <img onclick="startDictation()" src="https://icon-library.net/images/microphone-png-icon/microphone-png-icon-21.jpg" />
+                <img onclick="startDictation(init)" src="https://icon-library.net/images/microphone-png-icon/microphone-png-icon-21.jpg" />
             </form>
         </div>
 
@@ -112,7 +112,7 @@
 
     var valueOfSpeech;
 
-        function startDictation() {
+        function startDictation(init) {
             
             if (window.hasOwnProperty('webkitSpeechRecognition')) {
 
@@ -129,25 +129,29 @@
                     document.getElementById('transcript').value
                         = e.results[0][0].transcript;
                     recognition.stop();
-                   // alert('before:' + document.getElementById('transcript').value);
-                    init();
-                    //valueOfSpeech = document.getElementById('transcript').value;//לוקח את טקסט ההקלטה
-                    //alert('after' + valueOfSpeech);
-                    var url = "https://everythingfonts.com/testdrive/mzUyooKjh99fgpSOEg7PsweF?text=";
-                    var apiOfSL = url.concat(valueOfSpeech);
-                    document.getElementById('signConverter').src = apiOfSL;//שם תוצאות של שפת הסימנים בתמונה
-                    go_get();
-
+                    init(toLetters);
                 };
 
                 recognition.onerror = function (e) {
                     recognition.stop();
                 }
-
             }
+            
         }
     </script>   
-
+    <script>
+        function toLetters() {
+            alert('to letters');
+            // alert('before:' + document.getElementById('transcript').value);
+            
+            valueOfSpeech = document.getElementById('transcript').value;//לוקח את טקסט ההקלטה
+            //alert('after' + valueOfSpeech);
+            var url = "https://everythingfonts.com/testdrive/mzUyooKjh99fgpSOEg7PsweF?text=";
+            var apiOfSL = url.concat(valueOfSpeech);
+            document.getElementById('signConverter').src = apiOfSL;//שם תוצאות של שפת הסימנים בתמונה
+            go_get();
+        }
+    </script>
 
 
 
@@ -159,7 +163,8 @@
 
     <script>
         //youtube
-         function go_get() {
+        function go_get() {
+            alert('go get');
             var base_url = 'http://www.youtube.com/embed?listType=search&list=';
             var search_field = valueOfSpeech;
             var target_url = base_url + search_field + "sign language";
@@ -171,8 +176,8 @@
     </script>
 
     <script>
-        function init() {
-           
+        function init(toLetters) {
+            alert('init');
             var url = "https://translate.yandex.net/api/v1.5/tr.json/translate",
                 keyAPI = "trnsl.1.1.20190903T181015Z.53dbdb4baa291c2e.eb2b68b6023c94c778dada0af170b665f7964d08";
               
@@ -191,18 +196,19 @@
                         
                         var json = JSON.parse(res);
                         if (json.code == 200) {
-                             //  json.text[0]) הטקסט נשמר במשתנה
-                        //    alert('in function:' + json.text[0]);
+                            //  json.text[0]) הטקסט נשמר במשתנה
+                                alert('in function:' + json.text[0]);
                             document.getElementById('transcript').value = json.text[0];
-                            return json.text[0];
+                            toLetters();
+                            //return json.text[0];
                         }
                         else {
                             //document.querySelector('#output').innerHTML = "Error Code: " + json.code;
                         }
-                       
                     }
                 }
-            
+                
+                
         }
             </script>
 
